@@ -1,0 +1,66 @@
+<form [formGroup]="form" class="dialog-wrapper">
+  <div class="dialog-header">
+    <div class="title">
+      Add new Category
+    </div>
+    <div class="flex1"></div>
+    <a mat-dialog-close class="close-dialog" (click)="dialogRef.close('no')">
+      <i class="material-icons">&#xE14C;</i>
+    </a>
+  </div>
+  <div class="dialog-content">
+    <div class="form-wrapper">
+      <div class="ui form">
+        <div class="fields two">
+          <div class="field">
+            <label>Name
+              <span class="rq-sign">*</span>
+            </label>
+            <input type="text" #focusInput placeholder="Genre text" required formControlName="name">
+            <div *ngIf="form.controls['name'].hasError('required') && form.controls['name'].touched"
+              class="error-message">This field is required.</div>
+            <div *ngIf="form.controls['name'].hasError('nameAvailable')" class="error-message">This name is taken. Try
+              another.</div>
+          </div>
+
+          <div class="field">
+            <label>Order
+              <span class="rq-sign">*</span>
+            </label>
+            <input type="number" #focusInput placeholder="Genre text" required formControlName="order">
+            <div *ngIf="form.controls['order'].hasError('required') && form.controls['order'].touched"
+              class="error-message">This field is required.</div>
+            <div *ngIf="form.controls['order'].hasError('nameAvailable')" class="error-message">This name is taken. Try
+              another.</div>
+          </div>
+          <!-- <div class="field">
+            <label>Icon
+              <span class="rq-sign">*</span>
+            </label>
+            <input type="text" placeholder="Font awesome name " required formControlName="icon">
+            <div *ngIf="form.controls['icon'].hasError('required') && form.controls['icon'].touched"
+              class="error-message">This field is required.</div>
+          </div> -->
+        </div>
+        <div class="field">
+          <mat-checkbox formControlName="topGenre">Top genre</mat-checkbox>
+        </div>
+        <div class="field">
+          <label>Description
+          </label>
+          <input type="text" placeholder="Genre detail information" formControlName="subtitle">
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="dialog-footer">
+    <div class="flex1"></div>
+    <a mat-dialog-close class="enbutton cancel m-r16" (click)="dialogRef.close('no')">Cancel</a>
+    <button type="submit" class="enbutton primary m-r16" [disabled]="!form.valid" (click)="create(form.value,true)">Save
+      New</button>
+    <button class="enbutton primary m-r16" [disabled]="!form.valid" (click)="create(form.value,false)">Save
+      Close</button>
+  </div>
+  <app-spinner *ngIf="store?.process"></app-spinner>
+</form>

@@ -1,0 +1,110 @@
+<form [formGroup]="form" class="dialog-wrapper">
+  <div class="dialog-header">
+    <div class="title">
+      Add New Account
+    </div>
+    <div class="flex1"></div>
+    <a mat-dialog-close class="close-dialog" (click)="dialogRef.close('no')">
+      <i class="material-icons">&#xE14C;</i>
+    </a>
+  </div>
+
+  <div class="dialog-content">
+    <div class="form-wrapper">
+      <div class="ui form">
+        <div class="field">
+          <label>Name
+            <span class="rq-sign">*</span>
+          </label>
+          <input #focusInput type="text" class="lg-input" placeholder="Enter full name" required formControlName="name">
+          <div *ngIf="form.controls['name'].hasError('required') && form.controls['name'].touched" class="error-message">This field is required.</div>
+          <div *ngIf="form.controls['name'].hasError('nameAvailable')" class="error-message">This code is taken. Try another.</div>
+        </div>
+        <div class="field">
+          <label>Email
+            <span class="rq-sign">*</span>
+          </label>
+          <input type="text" class="lg-input" placeholder="Enter a valid email" required formControlName="email">
+          <div *ngIf="form.controls['email'].hasError('required') && form.controls['email'].touched" class="error-message">This field is required.</div>
+        </div>
+        <div class="field">
+          <label>Phone number
+            <span class="rq-sign">*</span>
+          </label>
+          <input type="number" class="lg-input" placeholder="Enter a valid phone number" required formControlName="phone">
+          <div *ngIf="form.controls['phone'].hasError('required') && form.controls['phone'].touched" class="error-message">This field is required.</div>
+        </div>
+        <div class="field">
+          <mat-checkbox (change)="_changeToPhone($event)" formControlName="isPhone">Sign in app by phone number</mat-checkbox>
+        </div>
+        <div class="field">
+            <label>Verify code</label>
+            <input type="text"  placeholder="Enter verify code" formControlName="verify">
+            <button (click)="onSendCode()" [disabled]="!byPhone" mat-button>Send Code Now!</button><button (click)="onVerifyCode()" [disabled]="!byPhone" mat-button>Verify Now!</button>
+        </div>
+        <div fxFlex="100">
+            <div id="recaptcha-container" style="width: 100%;"></div>
+        </div>
+
+        <div class="field">
+            <label>Province <span class="rq-sign">*</span></label>
+            <input type="text"  [matAutocomplete]="autoProvince" placeholder="Select a province" formControlName="province">
+            <mat-autocomplete (optionSelected)="_onSelectedProvince($event)" #autoProvince="matAutocomplete" [displayWith]="displayItem">
+                <mat-option *ngFor="let state of filteredStatesProvince | async" [value]="state">
+                    {{state?.name }}
+                </mat-option>
+            </mat-autocomplete>
+            <div class="error-message" *ngIf="province.hasError('validKey')">
+                <div>You can only select province from list.</div>
+            </div>
+            <div *ngIf="form.controls['province'].hasError('required') && form.controls['province'].touched"
+                        class="error-message">Province is required.</div>
+        </div>
+        <div class="field">
+            <label>District <span class="rq-sign">*</span></label>
+            <input type="text"  [matAutocomplete]="autoDistrict" placeholder="Select a district" formControlName="district">
+            <mat-autocomplete (optionSelected)="_onSelectedDistrict($event)" #autoDistrict="matAutocomplete" [displayWith]="displayItem">
+                <mat-option *ngFor="let state of filteredStatesDistrict | async" [value]="state">
+                    {{state?.name }}
+                </mat-option>
+            </mat-autocomplete>
+            <div class="error-message" *ngIf="district.hasError('validKey')">
+                <div>You can only select district from list.</div>
+            </div>
+            <div *ngIf="form.controls['district'].hasError('required') && form.controls['district'].touched"
+                        class="error-message">District is required.</div>
+        </div>
+        <div class="field">
+            <label>Commune <span class="rq-sign">*</span></label>
+            <input type="text"  [matAutocomplete]="autoCommune" placeholder="Select a commune" formControlName="commune">
+            <mat-autocomplete  #autoCommune="matAutocomplete" [displayWith]="displayItem">
+                <mat-option *ngFor="let state of filteredStatesCommune | async" [value]="state">
+                    {{state?.name }}
+                </mat-option>
+            </mat-autocomplete>
+            <div class="error-message" *ngIf="commune.hasError('validKey')">
+                <div>You can only select commune from list.</div>
+            </div>
+            <div *ngIf="form.controls['commune'].hasError('required') && form.controls['commune'].touched"
+                        class="error-message">Commune is required.</div>
+        </div>
+        
+        
+        <div class="field">
+          <label>Description</label>
+          <textarea formControlName="description" cols="30" rows="5"></textarea>
+        </div>
+
+
+      </div>
+    </div>
+
+  </div>
+  <div class="dialog-footer">
+    <div class="flex1"></div>
+    <a mat-dialog-close class="enbutton cancel m-r16" (click)="dialogRef.close('no')">Cancel</a>
+    <button type="submit" class="enbutton primary m-r16" [disabled]="!form.valid || store?.process || byPhone" (click)="create(form.value,true)">Save New</button>
+    <button class="enbutton primary m-r16" [disabled]="!form.valid || store?.process || byPhone" (click)="create(form.value,false)">Save Close</button>
+  </div>
+  <app-spinner *ngIf="store?.process"></app-spinner>
+</form>

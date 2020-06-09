@@ -1,0 +1,150 @@
+<form [formGroup]="form" class="dialog-wrapper">
+  <div class="dialog-header">
+    <div class="title">
+      Update book
+    </div>
+    <div class="flex1"></div>
+    <a mat-dialog-close class="close-dialog" (click)="dialogRef.close('no')">
+      <i class="material-icons">&#xE14C;</i>
+    </a>
+  </div>
+  <div class="dialog-content">
+    <div class="form-wrapper">
+      <div class="ui form">
+        <div class="field">
+          <label>Title
+            <span class="rq-sign">*</span>
+          </label>
+          <input type="text" #focusInput class="lg-input" placeholder="Slide title" required formControlName="name">
+          <div *ngIf="form.controls['name'].hasError('required') && form.controls['name'].touched"
+            class="error-message">This field is required.</div>
+        </div>
+
+
+        <!-- <div class="field">
+          <label>Price
+            <span class="rq-sign">*</span>
+          </label>
+          <input type="text" class="lg-input" placeholder="Selling price" required formControlName="price">
+          <div *ngIf="form.controls['price'].hasError('required') && form.controls['price'].touched"
+            class="error-message">This field is required.</div>
+        </div> -->
+
+
+
+        <div class="fields two">
+          <div class="field">
+            <label>Genre
+              <span class="rq-sign">*</span>
+            </label>
+            <mat-select [compareWith]="compareObjects" formControlName="genre">
+              <mat-option *ngFor="let item of genreData" [value]="item">
+                {{item.name}}
+              </mat-option>
+            </mat-select>
+            <div *ngIf="form.controls['genre'].hasError('required') && form.controls['genre'].touched"
+              class="error-message">
+              This field is required.
+            </div>
+          </div>
+          <div class="field">
+            <label>Trending
+              <span class="rq-sign">*</span>
+            </label>
+            <mat-select [compareWith]="compareObjects" formControlName="trending">
+              <mat-option *ngFor="let data of tradingData" [value]="data">
+                {{data.text}}
+              </mat-option>
+            </mat-select>
+            <div *ngIf="form.controls['trending'].hasError('required') && form.controls['trending'].touched"
+              class="error-message">
+              This field is required.
+            </div>
+          </div>
+        </div>
+        <!-- <div class="fields two">
+          <div class="field">
+            <label>Status
+              <span class="rq-sign">*</span>
+            </label>
+            <mat-select [compareWith]="compareObjects" formControlName="status">
+              <mat-option *ngFor="let data of bookStatus" [value]="data">
+                {{data.text}}
+              </mat-option>
+            </mat-select>
+            <div *ngIf="form.controls['status'].hasError('required') && form.controls['status'].touched"
+              class="error-message">This field is required.</div>
+          </div>
+          <div class="field">
+            <label>Public date
+              <span class="rq-sign">*</span>
+            </label>
+            <div class="mixfeild">
+              <input type="text" (click)="datePicker.open()" [matDatepicker]="datePicker"
+                placeholder="Select public date" required formControlName="date">
+              <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+              <mat-datepicker #datePicker></mat-datepicker>
+            </div>
+            <div *ngIf="form.controls['date'].hasError('required') && form.controls['date'].touched"
+              class="error-message">This field is required.</div>
+          </div>
+        </div> -->
+
+        <!-- <div class="field">
+          <label>Payment option <span class="rq-sign">*</span></label>
+          <mat-selection-list class="mat-book" formControlName="paymentType">
+            <mat-list-option *ngFor="let item of paymentData" [selected]="data?.paymentType|selectedItemByKey:item?.key" [value]="item">
+              {{item?.text}}
+            </mat-list-option>
+          </mat-selection-list>
+        </div> -->
+
+        <div class="field">
+          <label>Payment option <span class="rq-sign">*</span></label>
+          <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
+            formControlName="paymentType">
+            <mat-radio-button class="example-radio-button" *ngFor="let item of paymentData"
+              [checked]="item.key === this.data.paymentType.key" [value]="item">
+              {{item?.text}}
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <div class="field">
+          <label>Book Type<span class="rq-sign">*</span></label>
+          <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
+            formControlName="bookType">
+            <mat-radio-button class="example-radio-button" *ngFor="let item of bookType"
+              [checked]="item.key === this.data.bookType.key" [value]="item">
+              {{item?.text}}
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <div class="field">
+          <label>Description <span class="rq-sign">*</span></label>
+          <textarea formControlName="description" placeholder="Book description"></textarea>
+          <div *ngIf="form.controls['description'].hasError('required') && form.controls['description'].touched"
+            class="error-message">This field is required.</div>
+        </div>
+        <!-- <div class="field">
+          <label>Tag <span class="rq-sign">*</span></label>
+          <mat-selection-list class="mat-book" formControlName="tag">
+            <mat-list-option *ngFor="let item of tagData" [selected]="data?.tag|selectedItemByKey:item?.key"
+              [value]="item">
+              {{item?.name}}
+            </mat-list-option>
+          </mat-selection-list>
+        </div> -->
+      </div>
+    </div>
+
+  </div>
+  <div class="dialog-footer">
+    <div class="flex1"></div>
+    <a mat-dialog-close class="enbutton cancel m-r16" (click)="dialogRef.close('no')">Cancel</a>
+    <button type="submit" class="enbutton primary m-r16" [disabled]="!form.valid || store?.process"
+      (click)="create(form.value)">Update</button>
+  </div>
+  <app-spinner *ngIf="store?.process"></app-spinner>
+</form>

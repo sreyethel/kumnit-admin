@@ -1,0 +1,101 @@
+<form [formGroup]="form" class="dialog-wrapper">
+  <div class="dialog-header">
+    <div class="title">
+      Update package
+    </div>
+    <div class="flex1"></div>
+    <a mat-dialog-close class="close-dialog" (click)="dialogRef.close('no')">
+      <i class="material-icons">&#xE14C;</i>
+    </a>
+  </div>
+  <div class="dialog-content">
+    <div class="form-wrapper">
+      <div class="ui form">
+        <div class="field">
+          <label>Name
+            <span class="rq-sign">*</span>
+          </label>
+          <input type="text" #focusInput class="lg-input" placeholder="Package name" required formControlName="name">
+          <div *ngIf="form.controls['name'].hasError('required') && form.controls['name'].touched"
+            class="error-message">This field is required.</div>
+          <div *ngIf="form.controls['name'].hasError('nameAvailable')" class="error-message">This name is taken. Try
+            another.</div>
+        </div>
+        <div class="fields two">
+          <div class="field">
+            <label>Price (USD)
+              <span class="rq-sign">*</span>
+            </label>
+            <input type="number" placeholder="Package price" required formControlName="price">
+            <div *ngIf="form.controls['price'].hasError('required') && form.controls['price'].touched"
+              class="error-message">This field is required.</div>
+          </div>
+          <div class="field">
+            <label>Period (By month)
+              <span class="rq-sign">*</span>
+            </label>
+            <input type="number" placeholder="Subscribe period" required formControlName="period">
+            <div *ngIf="form.controls['period'].hasError('required') && form.controls['period'].touched"
+              class="error-message">This field is required.</div>
+          </div>
+        </div>
+        <div class="field">
+          <label>Discount (%)</label>
+          <input type="number" class="lg-input" placeholder="Discount by percentage" formControlName="discount">
+        </div>
+        <div class="field">
+          <label>Description
+          </label>
+          <textarea type="text" placeholder="Package detail information" rows="3" cols="5"
+            formControlName="note"></textarea>
+        </div>
+
+
+
+        <div class="field">
+          <label>Subscription Type<span class="rq-sign">*</span></label>
+          <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
+            formControlName="productType">
+            <mat-radio-button [checked]="item.key === this.data.productType.key" class="example-radio-button"
+              *ngFor="let item of ProductType " [value]="item">
+              {{item?.name}}
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <div class="field">
+          <button mat-button (click)="_onAddBook()">
+            Add Book
+          </button>
+        </div>
+
+        <div class="field">
+          <label>Selected Books
+          </label>
+          <div class="list-selected-book" mat-button *ngFor="let item of store?.selectedBooks;let i=index">
+            <div class="row">
+              <img [src]="item?.fileUrl" />
+              <p>
+                {{item.title}}
+              </p>
+            </div>
+            <button (click)="_onRemoveSelected(i)" mat-button><i class="material-icons">
+                cancel
+              </i></button>
+          </div>
+        </div>
+
+
+
+      </div>
+    </div>
+
+  </div>
+  <div class="dialog-footer">
+    <div class="flex1"></div>
+    <a mat-dialog-close class="enbutton cancel m-r16" (click)="dialogRef.close('no')">Cancel</a>
+    <button type="submit" class="enbutton primary m-r16" [disabled]="!form.valid"
+      (click)="create(form.value)">Update</button>
+  </div>
+  <app-spinner *ngIf="store?.process"></app-spinner>
+</form>

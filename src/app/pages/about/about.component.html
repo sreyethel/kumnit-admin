@@ -1,0 +1,48 @@
+<ng-container *mobxAutorun>
+
+
+  <div [formGroup]="form" *ngIf="!store?.process" class="flx1">
+    <div class="text-area-container">
+      <label class="label">About</label>
+      <textarea formControlName="about" class="text-area">
+                </textarea>
+      <button *ngIf="!store?.loadingUpdate" (click)="this._onUpdateAbout()" class="button" mat-button>Update</button>
+      <button *ngIf="store?.loadingUpdate" disabled class="button" mat-button>Updating.....</button>
+    </div>
+    <div class="text-area-container">
+      <label class="label">Phone Numbers</label>
+      <div>
+        <input type="number" placeholder="Phone Number" class="input" formControlName="phone">
+        <button (click)="this._onAddPhoneNumber()" style="margin-left:12px" class="button" mat-button>Add</button>
+      </div>
+      <div class="phone" *ngFor="let item of store?.dataPhones">
+        <p>{{item.number}}</p>
+        <mat-menu #appMenu="matMenu">
+          <button (click)="this._onDeleteNumber(item)" mat-menu-item>Delete</button>
+        </mat-menu>
+        <button mat-icon-button [matMenuTriggerFor]="appMenu">
+          <mat-icon>more_horiz</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div class="text-area-container">
+      <label class="label">Emails</label>
+      <div>
+        <input placeholder="Emails" class="input" formControlName="email" value="">
+        <button (click)="this._onAddEmail()" style="margin-left:12px" class="button" mat-button>Add</button>
+      </div>
+      <div class="phone" *ngFor="let item of store?.dataEmails">
+        <p>{{item.email}}</p>
+        <mat-menu #appMenu="matMenu">
+          <button (click)="this._onDeleteEmail(item)" mat-menu-item>Delete</button>
+        </mat-menu>
+        <button mat-icon-button [matMenuTriggerFor]="appMenu">
+          <mat-icon>more_horiz</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <app-spinner *ngIf="store?.process"></app-spinner>
+
+</ng-container>

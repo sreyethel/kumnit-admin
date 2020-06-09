@@ -1,0 +1,29 @@
+<div>
+
+
+
+
+  <div>
+    <input (keyup)="_onSearch()" [(ngModel)]="inputText" placeholder="Search Book title" />
+    <button mat-button (click)="_onAddBook()" [mat-dialog-close]="true">Add Books</button>
+  </div>
+
+  <div *ngIf="store?.loading">
+    <app-loading></app-loading>
+  </div>
+  <div *ngIf="!store?.loading">
+    <mat-selection-list #shoes (selectionChange)="onSelection($event, shoes.selectedOptions)">
+      <div class="box-picture">
+        <mat-list-option class="list" *ngFor="let item of store?.dataSearch" [value]='item'>
+          <div class="center">
+            <img [src]="item?.fileUrl" />
+            <p> {{item.title}}</p>
+          </div>
+        </mat-list-option>
+      </div>
+    </mat-selection-list>
+  </div>
+
+
+
+</div>

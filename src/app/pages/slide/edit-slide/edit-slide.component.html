@@ -1,0 +1,48 @@
+<form [formGroup]="form" class="dialog-wrapper">
+  <div class="dialog-header">
+    <div class="title">
+      Update slide
+    </div>
+    <div class="flex1"></div>
+    <a mat-dialog-close class="close-dialog" (click)="dialogRef.close('no')">
+      <i class="material-icons">&#xE14C;</i>
+    </a>
+  </div>
+  <div class="dialog-content">
+    <div class="form-wrapper">
+      <div class="ui form">
+        <div class="fields two">
+          <div class="field">
+            <label>Title
+              <span class="rq-sign">*</span>
+            </label>
+            <input type="text" #focusInput placeholder="Slide title" required formControlName="name">
+            <div *ngIf="form.controls['name'].hasError('required') && form.controls['name'].touched"
+              class="error-message">This field is required.</div>
+          </div>
+          <div class="field">
+            <label>Order
+              <span class="rq-sign">*</span>
+            </label>
+            <input type="number" placeholder="Order number slide" required formControlName="order">
+            <div *ngIf="form.controls['order'].hasError('required') && form.controls['order'].touched"
+              class="error-message">This field is required.</div>
+          </div>
+        </div>
+        <div class="field">
+          <label>Description
+          </label>
+          <input type="text" placeholder="Remark" formControlName="description">
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="dialog-footer">
+    <div class="flex1"></div>
+    <a mat-dialog-close class="enbutton cancel m-r16" (click)="dialogRef.close('no')">Cancel</a>
+    <button type="submit" class="enbutton primary m-r16" [disabled]="!form.valid || store?.process"
+      (click)="create(form.value)">Update</button>
+  </div>
+  <app-spinner *ngIf="store?.process"></app-spinner>
+</form>

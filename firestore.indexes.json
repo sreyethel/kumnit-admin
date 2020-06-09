@@ -1,0 +1,59 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "subscribers",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "isPaid",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "expiredDateKey",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "page_key",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "subscribers",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "isPaid",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "product",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "fullName",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "subscribers",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "isPaid",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "product.period",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "page_key",
+          "order": "ASCENDING"
+        }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}

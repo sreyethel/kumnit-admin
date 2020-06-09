@@ -1,0 +1,50 @@
+@import "./../../../../styles.scss";
+.box-picture {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7.5px;
+  flex-wrap: wrap;
+
+  .list {
+    flex: 1 0 25%;
+    height: 200px;
+    margin-top: 30px;
+    margin-left: 7.5px;
+    margin-right: 7.5px;
+    .center {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      img {
+        width: 100px;
+        height: 150px;
+        object-fit: contain;
+      }
+      p {
+        text-align: center;
+        margin-top: 15px;
+      }
+    }
+  }
+}
+
+::ng-deep.mat-list-base .mat-list-item .mat-list-item-content-reverse,
+.mat-list-base .mat-list-option .mat-list-item-content-reverse {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+button {
+  background-color: $header;
+  color: white;
+}
+
+input {
+  font-size: 20px;
+  padding: 15px;
+  width: 70%;
+  margin: 30px;
+}

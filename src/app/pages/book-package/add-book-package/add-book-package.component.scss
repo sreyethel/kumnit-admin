@@ -1,0 +1,23 @@
+@import "./../../../../styles.scss";
+.list-selected-book {
+  display: flex;
+  align-items: center;
+  margin: 12px 0;
+  padding: 12px;
+  border: 1px solid #dedede;
+  justify-content: space-between;
+  i {
+    color: $header;
+  }
+  .row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    img {
+      width: 100px;
+      height: 150px;
+      object-fit: contain;
+      margin: 0 12px;
+    }
+  }
+}
